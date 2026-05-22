@@ -1,0 +1,499 @@
+:root {
+  --brown: #7a4824;
+  --brown-dark: #4f2b16;
+  --pink: #f58fa2;
+  --pink-soft: #ffe2e8;
+  --green: #77c79a;
+  --blue: #6db9e9;
+  --yellow: #ffd768;
+  --cream: #fff6d8;
+  --ink: #3e2b20;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 20% 14%, rgba(255, 215, 104, 0.28), transparent 22rem),
+    radial-gradient(circle at 82% 88%, rgba(109, 185, 233, 0.22), transparent 20rem),
+    var(--cream);
+  color: var(--ink);
+  font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding: 14px;
+}
+
+button {
+  font: inherit;
+}
+
+.app {
+  width: min(100%, 430px);
+}
+
+.game-shell {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  aspect-ratio: 1086 / 1698;
+  margin: 0 auto;
+  isolation: isolate;
+}
+
+.game-shell::before {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 1.5%;
+  height: 8%;
+  background: radial-gradient(ellipse, rgba(122, 72, 36, 0.24), rgba(122, 72, 36, 0.08) 42%, transparent 72%);
+  filter: blur(2px);
+  transform: translateY(35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 16px rgba(122, 72, 36, 0.18));
+  z-index: 1;
+}
+
+.sound-toggle {
+  position: absolute;
+  top: 10.2%;
+  right: 18%;
+  width: 38px;
+  aspect-ratio: 1;
+  border: 3px solid #8c4d27;
+  border-radius: 50%;
+  background: linear-gradient(#fff8c9, #ffd66f);
+  color: var(--brown-dark);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 3px 0 rgba(140, 77, 39, 0.25);
+  z-index: 3;
+}
+
+.sound-toggle.is-off {
+  background: linear-gradient(#f5f1df, #d8d1c2);
+  color: #816451;
+}
+
+.sound-toggle.is-off::after {
+  content: "";
+  position: absolute;
+  width: 72%;
+  height: 3px;
+  border-radius: 999px;
+  background: #8c4d27;
+  rotate: -35deg;
+}
+
+.sound-toggle:active {
+  translate: 0 2px;
+  box-shadow: 0 1px 0 rgba(140, 77, 39, 0.25);
+}
+
+.top-badge {
+  position: absolute;
+  top: 18.9%;
+  left: 50%;
+  translate: -50% 0;
+  min-width: 32%;
+  padding: 1.15% 3%;
+  border: 3px solid #8c4d27;
+  border-radius: 999px;
+  background: #fff5c7;
+  color: var(--brown-dark);
+  font-size: clamp(0.78rem, 3.4vw, 0.98rem);
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0;
+  box-shadow: 0 3px 0 rgba(140, 77, 39, 0.25);
+  z-index: 2;
+}
+
+.character-window {
+  position: absolute;
+  left: 23%;
+  top: 21.5%;
+  width: 54%;
+  height: 22%;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  z-index: 2;
+}
+
+.character {
+  width: 66%;
+  max-height: 76%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  will-change: transform;
+  transition: opacity 220ms ease, transform 240ms ease, scale 220ms ease;
+}
+
+.day-splash {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--brown-dark);
+  font-size: clamp(2.05rem, 11vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  opacity: 0;
+  scale: 0.92;
+  text-shadow:
+    0 3px 0 rgba(255, 255, 255, 0.9),
+    0 7px 0 rgba(122, 72, 36, 0.12);
+  transition: opacity 180ms ease, scale 220ms ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.game-shell.show-day-intro .day-splash {
+  opacity: 1;
+  scale: 1;
+}
+
+.game-shell.show-day-intro .character {
+  opacity: 0;
+  scale: 0.86;
+}
+
+.character.baby {
+  width: 46%;
+  max-height: 58%;
+  animation: babyMove 2.6s ease-in-out infinite;
+}
+
+.character.child {
+  width: 59%;
+  max-height: 70%;
+}
+
+.character.adult {
+  width: 80%;
+  max-height: 88%;
+}
+
+.character.child-good {
+  animation: happyStep 2.2s ease-in-out infinite;
+}
+
+.character.child-bad {
+  animation: shyStep 2.8s ease-in-out infinite;
+}
+
+.character.adult-healthy {
+  animation: bananaSway 2.4s ease-in-out infinite;
+}
+
+.character.adult-hard {
+  animation: hardShuffle 2.6s ease-in-out infinite;
+}
+
+.character.adult-loose {
+  animation: softWobble 2.5s ease-in-out infinite;
+}
+
+.character.adult-warning {
+  animation: slowCheck 3s ease-in-out infinite;
+}
+
+.character.bounce {
+  animation: bounce 520ms cubic-bezier(.22, 1.4, .38, 1);
+}
+
+.game-shell.fade .message-panel {
+  animation: softFade 360ms ease;
+}
+
+.title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.character-name {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 44.4%;
+  margin: 0;
+  color: var(--brown-dark);
+  text-align: center;
+  font-weight: 900;
+  font-size: clamp(0.84rem, 4vw, 1.08rem);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.9);
+  transition: opacity 180ms ease;
+  z-index: 2;
+}
+
+.game-shell.show-day-intro .character-name {
+  opacity: 0;
+}
+
+.message-panel {
+  position: absolute;
+  left: 21.5%;
+  right: 21.5%;
+  top: 53%;
+  height: 29%;
+  padding: 0 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 9px;
+  overflow: visible;
+  z-index: 2;
+}
+
+.message {
+  margin: 0;
+  color: var(--brown-dark);
+  font-size: clamp(0.76rem, 3.45vw, 0.98rem);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.note {
+  margin: 0;
+  color: #76533c;
+  font-size: clamp(0.64rem, 2.8vw, 0.78rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.message:empty,
+.note:empty {
+  display: none;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.message-panel.result-mode {
+  justify-content: center;
+  top: 53%;
+  height: 29%;
+  padding: 0 6%;
+  gap: 8px;
+}
+
+.message-panel.result-mode .message {
+  font-size: clamp(0.82rem, 3.5vw, 1rem);
+  line-height: 1.34;
+}
+
+.message-panel.result-mode .note {
+  display: none;
+}
+
+.message-panel.result-mode strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.message-panel.result-mode .choices {
+  order: 2;
+}
+
+.message-panel.result-mode .choice-btn {
+  min-height: 38px;
+  padding-block: 7px;
+}
+
+.choices.grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-btn {
+  min-height: 38px;
+  border: 2px solid var(--brown);
+  border-radius: 18px;
+  background: linear-gradient(#fff9dc, #ffdce5);
+  color: var(--brown-dark);
+  cursor: pointer;
+  font-size: clamp(0.78rem, 3.3vw, 0.96rem);
+  font-weight: 900;
+  line-height: 1.1;
+  padding: 8px 8px;
+  box-shadow: 0 3px 0 rgba(122, 72, 36, 0.35);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.choice-btn:hover,
+.choice-btn:focus-visible {
+  background: linear-gradient(#ffffff, #dff7ea);
+  transform: translateY(-1px);
+}
+
+.choice-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(122, 72, 36, 0.35);
+}
+
+.choice-btn.primary {
+  background: linear-gradient(#e8fff0, #bcefd1);
+}
+
+.sparkles {
+  position: absolute;
+  inset: 2%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sparkles span {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--yellow);
+  clip-path: polygon(50% 0, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0 50%, 37% 37%);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+}
+
+.sparkles span:nth-child(1) { left: 4%; top: 20%; }
+.sparkles span:nth-child(2) { right: 7%; top: 13%; background: #8ed5ff; }
+.sparkles span:nth-child(3) { left: 18%; bottom: 12%; background: #ff94a9; }
+.sparkles span:nth-child(4) { right: 18%; bottom: 18%; }
+
+.sparkles.show {
+  animation: sparkleShow 950ms ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-18px) scale(1.04, 0.96); }
+  62% { transform: translateY(4px) scale(0.98, 1.03); }
+}
+
+@keyframes babyMove {
+  0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(-6px) translateY(2px) rotate(-3deg); }
+  50% { transform: translateX(0) translateY(-3px) rotate(0deg); }
+  75% { transform: translateX(6px) translateY(2px) rotate(3deg); }
+}
+
+@keyframes happyStep {
+  0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+  20% { transform: translateX(-8px) translateY(-2px) rotate(-2deg); }
+  45% { transform: translateX(6px) translateY(0) rotate(2deg); }
+  65% { transform: translateX(10px) translateY(-3px) rotate(3deg); }
+}
+
+@keyframes shyStep {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  30% { transform: translateX(-5px) translateY(1px) rotate(-1deg); }
+  58% { transform: translateX(4px) translateY(2px) rotate(1deg); }
+}
+
+@keyframes bananaSway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  30% { transform: translateX(-9px) rotate(-3deg); }
+  65% { transform: translateX(9px) rotate(3deg); }
+}
+
+@keyframes hardShuffle {
+  0%, 100% { transform: translateX(0); }
+  22% { transform: translateX(-7px) rotate(-1deg); }
+  28% { transform: translateX(-3px) rotate(0deg); }
+  54% { transform: translateX(7px) rotate(1deg); }
+  60% { transform: translateX(3px) rotate(0deg); }
+}
+
+@keyframes softWobble {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  28% { transform: translateX(-7px) scaleX(1.03); }
+  58% { transform: translateX(8px) scaleX(0.98); }
+}
+
+@keyframes slowCheck {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  35% { transform: translateX(-5px) translateY(2px); }
+  70% { transform: translateX(5px) translateY(1px); }
+}
+
+@keyframes softFade {
+  0% { opacity: 0.4; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sparkleShow {
+  0% { opacity: 0; transform: scale(0.7) rotate(0deg); }
+  25%, 78% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.25) rotate(18deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character,
+  .character.baby,
+  .character.child-good,
+  .character.child-bad,
+  .character.adult-healthy,
+  .character.adult-hard,
+  .character.adult-loose,
+  .character.adult-warning,
+  .sparkles.show,
+  .game-shell.fade .message-panel {
+    animation: none;
+  }
+}
+
+@media (max-width: 370px) {
+  body {
+    padding: 6px;
+  }
+
+  .message-panel {
+    left: 22%;
+    right: 22%;
+    gap: 4px;
+  }
+
+  .choice-btn {
+    min-height: 29px;
+    padding: 5px 6px;
+  }
+}
+
+@media (min-width: 700px) {
+  body {
+    align-items: center;
+  }
+}

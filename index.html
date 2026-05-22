@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>うんちっち育成ゲーム</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <section class="game-shell" id="gameShell">
+        <img class="frame" src="assets/frame_tall_clean.png" alt="" aria-hidden="true" />
+
+        <button class="sound-toggle" id="soundToggle" type="button" aria-label="BGMをオフにする" aria-pressed="true">♪</button>
+
+        <div class="top-badge" id="dayLabel">START</div>
+
+        <div class="character-window" id="characterWindow">
+          <div class="sparkles" id="sparkles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="day-splash" id="daySplash" aria-hidden="true">1日目</div>
+          <img class="character" id="characterImage" src="assets/baby.png" alt="ベビーうんちっち" />
+        </div>
+
+        <h1 class="title" id="mainTitle">うんちっち育成ゲーム</h1>
+        <p class="character-name" id="characterName">ベビーうんちっち</p>
+
+        <div class="message-panel" id="messagePanel">
+          <p class="message" id="messageText">
+            7日間の生活習慣で、うんちっちが進化する！
+          </p>
+          <div class="choices" id="choices"></div>
+          <p class="note" id="noteText">
+            これは医療診断ではありません。うんちの色や形を観察するきっかけとして楽しんでください。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
