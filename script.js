@@ -81,7 +81,6 @@ const categories = [
 
 const el = {
   shell: document.getElementById("gameShell"),
-  day: document.getElementById("dayLabel"),
   title: document.getElementById("mainTitle"),
   image: document.getElementById("characterImage"),
   name: document.getElementById("characterName"),
@@ -202,7 +201,6 @@ function renderStart() {
   state.screen = "start";
   hideDayIntro();
   el.message.parentElement.classList.remove("result-mode");
-  el.day.textContent = "START";
   el.title.textContent = "うんちっち育成ゲーム";
   setCharacter({ src: ASSETS.baby, name: "ベビーうんちっち", alt: "ベビーうんちっち", stage: "baby", id: "baby" });
   el.message.textContent = "7日間で進化するよ！";
@@ -224,7 +222,6 @@ function renderDay(options = {}) {
   pulseFade();
   const character = getCurrentCharacter();
 
-  el.day.textContent = `${state.day}日目 / 7日目`;
   el.title.textContent = "今日はどう過ごす？";
   setCharacter(character);
   el.message.textContent = "";
@@ -300,7 +297,6 @@ function renderEvolution() {
   el.message.parentElement.classList.remove("result-mode");
   pulseFade();
   const character = getCurrentCharacter();
-  el.day.textContent = `${state.day}日目 / 7日目`;
   el.title.textContent = "うんちっちが進化した！";
   setCharacter(character);
   el.message.textContent = "うんちっちが進化した！";
@@ -370,7 +366,6 @@ function renderResult() {
   showSparkles();
   const result = getFinalResult();
 
-  el.day.textContent = "最終進化！";
   el.title.textContent = "最終進化！";
   setCharacter({ ...result, alt: result.name }, true);
   el.message.innerHTML = `<strong>${result.type}</strong><br>${result.description}<br>${result.advice}`;

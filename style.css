@@ -117,35 +117,94 @@ button {
   box-shadow: 0 1px 0 rgba(140, 77, 39, 0.25);
 }
 
-.top-badge {
+.character-window {
   position: absolute;
-  top: 18.9%;
-  left: 50%;
-  translate: -50% 0;
-  min-width: 32%;
-  padding: 1.15% 3%;
-  border: 3px solid #8c4d27;
-  border-radius: 999px;
-  background: #fff5c7;
-  color: var(--brown-dark);
-  font-size: clamp(0.78rem, 3.4vw, 0.98rem);
-  font-weight: 900;
-  text-align: center;
-  letter-spacing: 0;
-  box-shadow: 0 3px 0 rgba(140, 77, 39, 0.25);
+  left: 21.8%;
+  top: 19.9%;
+  width: 56.4%;
+  height: 25.4%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8%;
   z-index: 2;
 }
 
-.character-window {
+.scene-bg {
   position: absolute;
-  left: 23%;
-  top: 21.5%;
-  width: 54%;
-  height: 22%;
-  display: grid;
-  place-items: center;
-  overflow: visible;
-  z-index: 2;
+  inset: 1%;
+  overflow: hidden;
+  border-radius: 8%;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(255, 232, 105, 0.78) 0 7%, transparent 8%),
+    linear-gradient(#bfeefb 0 48%, #dcf6d8 49% 100%);
+  z-index: 0;
+}
+
+.scene-bg::before {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 0;
+  height: 38%;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35) 25%, transparent 25%) 0 0 / 22px 22px,
+    linear-gradient(#8fd789, #68bf74);
+}
+
+.cloud {
+  position: absolute;
+  width: 54px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    12px -8px 0 rgba(255, 255, 255, 0.9),
+    26px -4px 0 rgba(255, 255, 255, 0.9);
+}
+
+.cloud-a {
+  left: 10%;
+  top: 13%;
+}
+
+.cloud-b {
+  right: 16%;
+  top: 27%;
+  scale: 0.68;
+  opacity: 0.82;
+}
+
+.hill {
+  position: absolute;
+  bottom: 22%;
+  width: 58%;
+  height: 28%;
+  border-radius: 100% 100% 0 0;
+  background: #99da8b;
+}
+
+.hill-a {
+  left: -12%;
+}
+
+.hill-b {
+  right: -14%;
+  bottom: 20%;
+  background: #b3e394;
+}
+
+.grass-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 27%;
+  height: 8px;
+  background:
+    linear-gradient(75deg, transparent 45%, #5aa85d 46% 55%, transparent 56%) 0 0 / 18px 8px,
+    linear-gradient(-75deg, transparent 45%, #5aa85d 46% 55%, transparent 56%) 9px 0 / 18px 8px;
+  opacity: 0.55;
 }
 
 .character {
@@ -155,6 +214,7 @@ button {
   image-rendering: pixelated;
   will-change: transform;
   transition: opacity 220ms ease, transform 240ms ease, scale 220ms ease;
+  z-index: 1;
 }
 
 .day-splash {
@@ -173,7 +233,7 @@ button {
     0 7px 0 rgba(122, 72, 36, 0.12);
   transition: opacity 180ms ease, scale 220ms ease;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
 }
 
 .game-shell.show-day-intro .day-splash {
@@ -247,7 +307,7 @@ button {
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 44.4%;
+  top: 44.8%;
   margin: 0;
   color: var(--brown-dark);
   text-align: center;
